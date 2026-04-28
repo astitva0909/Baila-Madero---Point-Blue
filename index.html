@@ -4521,6 +4521,79 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         text-decoration: none;
         color: black;
       }
+
+      /* fhkvbzshkbr */
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f7f7f7;
+        color: #111;
+      }
+
+      .faq {
+        max-width: 800px;
+        margin: 80px auto;
+        padding: 0 20px;
+      }
+
+      .subtitle {
+        color: #ff3b7a;
+        letter-spacing: 3px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .faq-header h2 {
+        font-size: 48px;
+        font-weight: 900;
+        margin: 10px 0 40px;
+      }
+
+      .faq-header h2 span {
+        font-style: italic;
+      }
+
+      .faq-item {
+        border-bottom: 1px solid #ddd;
+      }
+
+      .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 20px 0;
+        font-size: 18px;
+        font-weight: 600;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+      }
+
+      .faq-question:hover {
+        color: #ff3b7a;
+      }
+
+      .icon {
+        transition: transform 0.3s ease;
+      }
+
+      .faq-item.active .icon {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.35s ease;
+        font-size: 14px;
+        color: #444;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 200px;
+        margin-bottom: 15px;
+      }
     </style>
   </head>
   <body>
@@ -10414,7 +10487,84 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
               </div>
             </div>
           </section>
-          <section
+
+          <section class="faq">
+            <div class="faq-header">
+              <p class="subtitle">· PREGUNTAS FRECUENTES</p>
+              <h2>Todo lo que <span>querés saber</span>.</h2>
+            </div>
+
+            <div class="faq-list">
+              <div class="faq-item">
+                <button class="faq-question">
+                  ¿Cómo reservo mi primera clase?
+                  <span class="icon">⌄</span>
+                </button>
+                <div class="faq-answer">
+                  Escribinos por WhatsApp al +54 11 6996-2856 y te confirmamos
+                  horario. La primera clase es gratis para que nos conozcas.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question">
+                  ¿Tengo que tener experiencia previa?
+                  <span class="icon">⌄</span>
+                </button>
+                <div class="faq-answer">
+                  No. Tenemos clases de nivel principiante, intermedio y
+                  avanzado. Siempre hay un lugar para vos, arranques desde donde
+                  arranques.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question">
+                  ¿Qué llevo a la clase?
+                  <span class="icon">⌄</span>
+                </button>
+                <div class="faq-answer">
+                  Ropa cómoda, medias antideslizantes (tenemos en venta si te
+                  olvidás) y una botella de agua. El resto lo ponemos nosotras.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question">
+                  ¿Cuáles son los horarios?
+                  <span class="icon">⌄</span>
+                </button>
+                <div class="faq-answer">
+                  Abrimos de lunes a sábados desde las 6:30 hasta las 21:00.
+                  Consultá la grilla semanal actualizada por WhatsApp.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question">
+                  ¿Puedo cancelar o reprogramar?
+                  <span class="icon">⌄</span>
+                </button>
+                <div class="faq-answer">
+                  Sí, podés cancelar con hasta 2 horas de anticipación sin
+                  costo. Después, se descuenta del pack.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question">
+                  ¿Aceptan tarjeta de crédito?
+                  <span class="icon">⌄</span>
+                </button>
+                <div class="faq-answer">
+                  Sí, aceptamos todas las tarjetas, transferencia y Mercado
+                  Pago. También hacemos planes en cuotas.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- <section
             id="faq"
             data-testid="faq-section"
             class="bg-[color:var(--bm-bg)] py-20 sm:py-28 md:py-32"
@@ -11144,7 +11294,8 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                 </div>
               </div>
             </div>
-          </section>
+          </section> -->
+
           <section
             id="contacto"
             data-testid="contacto-section"
@@ -12495,6 +12646,49 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         link.addEventListener("click", () => {
           menu.classList.remove("active");
           document.body.style.overflow = "";
+        });
+      });
+    </script>
+    <script>
+      const items = document.querySelectorAll(".faq-item");
+
+      items.forEach((item) => {
+        const btn = item.querySelector(".faq-question");
+        const content = item.querySelector(".faq-answer");
+
+        btn.addEventListener("click", () => {
+          // close others smoothly
+          items.forEach((i) => {
+            if (i !== item) {
+              const c = i.querySelector(".faq-answer");
+              i.classList.remove("active");
+              c.style.height = c.scrollHeight + "px";
+              requestAnimationFrame(() => {
+                c.style.height = "0px";
+              });
+            }
+          });
+
+          // toggle current
+          if (item.classList.contains("active")) {
+            // close
+            content.style.height = content.scrollHeight + "px";
+            requestAnimationFrame(() => {
+              content.style.height = "0px";
+            });
+            item.classList.remove("active");
+          } else {
+            // open
+            item.classList.add("active");
+            content.style.height = content.scrollHeight + "px";
+          }
+        });
+
+        // reset height after animation
+        content.addEventListener("transitionend", () => {
+          if (item.classList.contains("active")) {
+            content.style.height = "auto";
+          }
         });
       });
     </script>
